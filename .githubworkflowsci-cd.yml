@@ -1,0 +1,26 @@
+
+name: CI-CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Test website content
+        run: grep -q "My DevOps CI/CD Project" index.html
+
+      - name: Build Docker image
+        run: docker build -t devops-cicd-demo:latest .
+
+      - name: Confirm image was built
+        run: docker image inspect devops-cicd-demo:latest
+
